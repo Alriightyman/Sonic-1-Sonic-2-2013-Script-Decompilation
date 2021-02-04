@@ -12,6 +12,10 @@ public alias 65536 : HITBOX_AUTO
 public alias arrayPos6 : currentPlayer
 public alias arrayPos7 : playerCount
 
+private alias 0 : PLAYER_SONIC
+private alias 1 : PLAYER_TAILS
+private alias 2 : PLAYER_KNUCKLES
+
 // Function declarations
 reserve function PlayerObject_ProcessPlayer
 reserve function PlayerObject_Blank
@@ -402,14 +406,14 @@ end function
 
 function PlayerObject_SwitchPhysicsState
 	switch stage.playerListPos
-	case 0
+	case PLAYER_SONIC
 	case 3
 		temp0 = PlayerObject_SonicPhysicsTable
 		break
-	case 1
+	case PLAYER_TAILS
 		temp0 = PlayerObject_TailsPhysicsTable
 		break
-	case 2
+	case PLAYER_KNUCKLES
 		temp0 = PlayerObject_KnuxPhysicsTable
 		break
 	end switch
@@ -461,14 +465,14 @@ end function
 function PlayerObject_ProcessSuperState
 	if PlayerObject_SuperState != 0
 		switch stage.playerListPos
-		case 0
+		case PLAYER_SONIC
 		case 3
 			CallFunction(PlayerObject_ProcessSuperPalS)
 			break
-		case 1
+		case PLAYER_TAILS
 			CallFunction(PlayerObject_ProcessSuperPalT)
 			break
-		case 2
+		case PLAYER_KNUCKLES
 			CallFunction(PlayerObject_ProcessSuperPalK)
 			break
 		end switch
@@ -486,7 +490,7 @@ function PlayerObject_ProcessSuperState
 		end if
 	end if
 	if PlayerObject_SuperState == 2
-		if stage.playerListPos == 0
+		if stage.playerListPos == PLAYER_SONIC
 			LoadAnimation("Sonic.ani")
 		end if
 		if music.currentTrack == 7
@@ -1521,7 +1525,7 @@ function PlayerObject_SuperTransform
 		object[currentPlayer].value8 = 0
 		object[currentPlayer].visible = 1
 		CallFunction(PlayerObject_SwitchPhysicsState)
-		if stage.playerListPos == 0
+		if stage.playerListPos == PLAYER_SONIC
 			LoadAnimation("SuperSonic.ani")
 		end if
 		object[currentPlayer].state = PlayerObject_Transforming
@@ -2894,22 +2898,22 @@ function PlayerObject_KnuxWallClimb
 		else
 			if object.direction == FLIP_NONE
 				temp2 = object.xpos
-				ObjectTileGrip(CMODE_LWALL, 10, -10, object.collisionPlane)
+				ObjectTileGrip(CSIDE_LWALL, 10, -10, object.collisionPlane)
 				temp0 = checkResult
 				temp3 = object.xpos
 				object.xpos = temp2
-				ObjectTileGrip(CMODE_LWALL, 10, 11, object.collisionPlane)
+				ObjectTileGrip(CSIDE_LWALL, 10, 11, object.collisionPlane)
 				temp1 = checkResult
 				if object.xpos > temp3
 					object.xpos = temp3
 				end if
 			else
 				temp2 = object.xpos
-				ObjectTileGrip(CMODE_RWALL, -10, -10, object.collisionPlane)
+				ObjectTileGrip(CSIDE_RWALL, -10, -10, object.collisionPlane)
 				temp0 = checkResult
 				temp3 = object.xpos
 				object.xpos = temp2
-				ObjectTileGrip(CMODE_RWALL, -10, 11, object.collisionPlane)
+				ObjectTileGrip(CSIDE_RWALL, -10, 11, object.collisionPlane)
 				temp1 = checkResult
 				if object.xpos < temp3
 					object.xpos = temp3
@@ -2947,7 +2951,7 @@ function PlayerObject_KnuxLedgePullUp
 	switch object.frame
 	case 0
 		if object.value1 < 5
-			ObjectTileGrip(CMODE_FLOOR, 12, -9, object.collisionPlane)
+			ObjectTileGrip(CSIDE_FLOOR, 12, -9, object.collisionPlane)
 			object.value1++
 		else
 			object.value1 = 0
@@ -3677,7 +3681,7 @@ event ObjectStartup
 		screen.cameraTarget = 0
 		currentPlayer = 0
 		if stage.playerListPos > 2
-			stage.playerListPos = 0
+			stage.playerListPos = PLAYER_SONIC
 			stage.player2Enabled = 1
 		end if
 		ResetObjectEntity(0, TypeName[Player Object], 0, object[arrayPos0].xpos, object[arrayPos0].ypos)
@@ -3698,8 +3702,9 @@ event ObjectStartup
 		PlayerObject_value1 = 0
 		PlayerObject_value2 = 0
 		PlayerObject_value3 = 0
+
 		switch stage.playerListPos
-		case 0
+		case PLAYER_SONIC
 			LoadAnimation("SuperSonic.ani")
 			LoadAnimation("Sonic.ani")
 			CallFunction(PlayerObject_ProcessSuperPalS)
@@ -3708,7 +3713,7 @@ event ObjectStartup
 			object[0].value32 = PlayerObject_ShieldAbilities
 			ANI_PEELOUT = ANI_RUNNING
 			break
-		case 1
+		case PLAYER_TAILS
 			object[0].type = TypeName[Tails Object]
 			object[0].propertyValue = 1
 			CallFunction(PlayerObject_ProcessSuperPalT)
@@ -3724,7 +3729,7 @@ event ObjectStartup
 			end if
 			stage.player2Enabled = 0
 			break
-		case 2
+		case PLAYER_KNUCKLES
 			LoadAnimation("Knuckles.ani")
 			CallFunction(PlayerObject_ProcessSuperPalK)
 			object[0].propertyValue = 2
