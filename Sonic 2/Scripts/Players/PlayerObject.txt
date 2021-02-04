@@ -1441,7 +1441,7 @@ function PlayerObject_StartJump
 		temp7 = object.ypos
 		temp0 = object.collisionTop
 		temp0 -= 2
-		ObjectTileCollision(CMODE_ROOF, 0, temp0, object.collisionPlane)
+		ObjectTileCollision(CSIDE_ROOF, 0, temp0, object.collisionPlane)
 		temp1 = checkResult
 		object.xpos = temp6
 		object.ypos = temp7
@@ -1450,7 +1450,7 @@ function PlayerObject_StartJump
 			object.iypos -= object.value30
 			temp0 += object.value30
 		end if
-		ObjectTileCollision(CMODE_FLOOR, 0, temp0, object.collisionPlane)
+		ObjectTileCollision(CSIDE_FLOOR, 0, temp0, object.collisionPlane)
 	end if
 	if temp1 == 0
 		object.controlLock = 0
@@ -2567,12 +2567,12 @@ function PlayerObject_KnuxGlideLeft
 				object.xpos = temp7
 				object.xpos += object.xvel
 				object.ypos = object.ypos
-				ObjectTileCollision(CMODE_RWALL, -12, -2, object.collisionPlane)
+				ObjectTileCollision(CSIDE_RWALL, -12, -2, object.collisionPlane)
 				temp0 = checkResult
 				temp2 = object.xpos
 				object.xpos = temp7
 				object.xpos += object.xvel
-				ObjectTileCollision(CMODE_RWALL, -12, 11, object.collisionPlane)
+				ObjectTileCollision(CSIDE_RWALL, -12, 11, object.collisionPlane)
 				temp1 = checkResult
 				temp3 = object.xpos
 			end if
@@ -2681,12 +2681,12 @@ function PlayerObject_KnuxGlideRight
 				object.xpos = temp7
 				object.xpos += object.xvel
 				object.ypos = object.ypos
-				ObjectTileCollision(CMODE_LWALL, 12, -2, object.collisionPlane)
+				ObjectTileCollision(CSIDE_LWALL, 12, -2, object.collisionPlane)
 				temp0 = checkResult
 				temp2 = object.xpos
 				object.xpos = temp7
 				object.xpos += object.xvel
-				ObjectTileCollision(CMODE_LWALL, 12, 11, object.collisionPlane)
+				ObjectTileCollision(CSIDE_LWALL, 12, 11, object.collisionPlane)
 				temp1 = checkResult
 				temp3 = object.xpos
 			else
