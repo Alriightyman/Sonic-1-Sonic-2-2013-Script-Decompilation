@@ -3209,7 +3209,7 @@ function PlayerObject_Death
 					object.value3 = 0
 					object.state = 3
 				else
-					if options.gameMode == 0
+					if player.lives == 0
 						object.value3 = -0xB40
 						object.state = 0
 						PlayMusic(5)
@@ -3226,7 +3226,7 @@ function PlayerObject_Death
 					end if
 				end if
 			else
-				if options.gameMode == 0
+				if player.lives == 0
 					object.type = TypeName[Death Event]
 					object.state = 0
 				end if
@@ -3301,8 +3301,8 @@ function PlayerObject_Drown
 		if object.value16 == 0
 			arrayPos0 = 25
 			arrayPos0 += object.entityPos
-			if options.gameMode > 0
-				options.gameMode--
+			if player.lives > 0
+				player.lives--
 			end if
 			if options.vsMode == 0
 				stage.timeEnabled = 0
